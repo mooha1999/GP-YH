@@ -61,7 +61,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Generate Table</h1>
+      <h1>Purchase Budget Estimation</h1>
       <div>
         <label>Enter the number of devices:</label>
         <input
