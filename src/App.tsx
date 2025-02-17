@@ -16,13 +16,15 @@ function App() {
   // 9- Display the table in ascending order of the sum of the n columns
 
   const [devices, setDevices] = useState<number>(0);
-  const [prices, setPrices] = useState<number[][]>([]);
+  const [prices, setPrices] = useState<{ name: string; values: number[] }[]>([]);
   const [table, setTable] = useState<number[][]>([]);
   const [statistics, setStatistics] = useState<number[]>([]);
 
   useEffect(() => {
     if (devices > 0) {
-      setPrices(new Array(devices).fill(0).map(() => new Array(5).fill(0)));
+      setPrices(
+        new Array(devices).fill(0).map(() => ({ name: "", values: new Array(5).fill(0) }))
+      );
     }
   }, [devices]);
 
@@ -33,8 +35,8 @@ function App() {
     const newTable = new Array(100).fill(0).map((_, index) => {
       const row = new Array(devices + 2).fill(0);
       const sum = prices.reduce((acc, device, i) => {
-        const minPrice = Math.min(...device);
-        const maxPrice = Math.max(...device);
+        const minPrice = Math.min(...device.values);
+        const maxPrice = Math.max(...device.values);
         const price = minPrice + Math.random() * (maxPrice - minPrice);
         row[i + 1] = price;
         return acc + price;
@@ -72,15 +74,25 @@ function App() {
         <div>
           {prices.map((device, i) => (
             <div key={i}>
-              <label>Enter 5 prices for device {i + 1}:</label>
-              {device.map((price, j) => (
+              <label>Enter the name and 5 prices for device {i + 1}:</label>
+              <input
+                type="text"
+                value={device.name}
+                onChange={(e) => {
+                  const newPrices = [...prices];
+                  newPrices[i].name = e.target.value;
+                  setPrices(newPrices);
+                }}
+                placeholder="Device Name"
+              />
+              {device.values.map((price, j) => (
                 <input
                   key={j}
                   type="number"
                   value={price}
                   onChange={(e) => {
                     const newPrices = [...prices];
-                    newPrices[i][j] = parseInt(e.target.value);
+                    newPrices[i].values[j] = parseInt(e.target.value);
                     setPrices(newPrices);
                   }}
                 />
@@ -93,13 +105,13 @@ function App() {
         Generate
       </button>
       {table.length > 0 && (
-        <>
+        <div className="table-container">
           <table>
             <thead>
               <tr>
                 <th>Index</th>
-                {prices.map((_, i) => (
-                  <th key={i}>Device {i + 1}</th>
+                {prices.map((device, i) => (
+                  <th key={i}>{device.name || `Device ${i + 1}`}</th>
                 ))}
                 <th>Sum</th>
               </tr>
@@ -120,7 +132,7 @@ function App() {
                 ))}
             </tbody>
           </table>
-          //Another table to display the statistics
+          {/* Another table to display the statistics */}
           <table>
             <thead>
               <tr>
@@ -142,7 +154,7 @@ function App() {
               </tr>
             </tbody>
           </table>
-        </>
+        </div>
       )}
     </div>
   );
