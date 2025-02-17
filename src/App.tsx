@@ -16,14 +16,19 @@ function App() {
   // 9- Display the table in ascending order of the sum of the n columns
 
   const [devices, setDevices] = useState<number>(0);
-  const [prices, setPrices] = useState<{ name: string; values: number[] }[]>([]);
+  const [prices, setPrices] = useState<{ name: string; values: number[] }[]>(
+    []
+  );
   const [table, setTable] = useState<number[][]>([]);
   const [statistics, setStatistics] = useState<number[]>([]);
+  const [confidenceLevel, setConfidenceLevel] = useState<number>(0);
 
   useEffect(() => {
     if (devices > 0) {
       setPrices(
-        new Array(devices).fill(0).map(() => ({ name: "", values: new Array(5).fill(0) }))
+        new Array(devices)
+          .fill(0)
+          .map(() => ({ name: "", values: new Array(5).fill(0) }))
       );
     }
   }, [devices]);
@@ -33,7 +38,7 @@ function App() {
       return;
     }
     const newTable = new Array(100).fill(0).map((_, index) => {
-      const row = new Array(devices + 2).fill(0);
+      const row = new Array<number>(devices + 2).fill(0);
       const sum = prices.reduce((acc, device, i) => {
         const minPrice = Math.min(...device.values);
         const maxPrice = Math.max(...device.values);
@@ -45,18 +50,39 @@ function App() {
       row[devices + 1] = sum;
       return row;
     });
-    setTable(newTable);
+    const newTableSorted = newTable.sort(
+      (a, b) => a[devices + 1] - b[devices + 1]
+    );
+    setTable(newTableSorted);
 
     // the minimum of the totals column
-    const min = Math.min(...newTable.map((row) => row[devices + 1]));
+    const min = Math.min(...newTableSorted.map((row) => row[devices + 1]));
     // the maximum of the totals column
-    const max = Math.max(...newTable.map((row) => row[devices + 1]));
+    const max = Math.max(...newTableSorted.map((row) => row[devices + 1]));
     // the mean of the totals column
-    const mean = newTable.reduce((acc, row) => acc + row[devices + 1], 0) / 100;
+    const mean =
+      newTableSorted.reduce((acc, row) => acc + row[devices + 1], 0) / 100;
     // the confidence level of the totals column -> element 95 plus element 96 divided by 2
-    const confidenceLevel =
-      (newTable[94][devices + 1] + newTable[95][devices + 1]) / 2;
-    setStatistics([min, max, mean, confidenceLevel]);
+    const confidenceLevelVal =
+      (newTableSorted[confidenceLevel][devices + 1] +
+        newTableSorted[confidenceLevel + 1][devices + 1]) /
+      2;
+    console.log(
+      newTableSorted[confidenceLevel][devices + 1],
+      newTableSorted[confidenceLevel + 1][devices + 1]
+    );
+    setStatistics([min, max, mean, confidenceLevelVal]);
+  };
+
+  const onConfidenceLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value >= 0 && value < 100) {
+      setConfidenceLevel(value);
+    } else if (value < 0) {
+      setConfidenceLevel(0);
+    } else {
+      setConfidenceLevel(99);
+    }
   };
 
   return (
@@ -68,6 +94,14 @@ function App() {
           type="number"
           value={devices}
           onChange={(e) => setDevices(parseInt(e.target.value))}
+        />
+      </div>
+      <div>
+        <label>Enter the confidence level percentage:</label>
+        <input
+          type="number"
+          value={confidenceLevel}
+          onChange={onConfidenceLevelChange}
         />
       </div>
       {prices.length > 0 && (
@@ -117,19 +151,17 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {table
-                .sort((a, b) => a[devices + 1] - b[devices + 1])
-                .map((row, i) => (
-                  <tr key={i}>
-                    {row.map((cell, j) => {
-                      if (j === 0) {
-                        return <td key={j}>{i + 1}</td>;
-                      } else {
-                        return <td key={j}>{cell.toFixed(2)}</td>;
-                      }
-                    })}
-                  </tr>
-                ))}
+              {table.map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) => {
+                    if (j === 0) {
+                      return <td key={j}>{i + 1}</td>;
+                    } else {
+                      return <td key={j}>{cell.toFixed(2)}</td>;
+                    }
+                  })}
+                </tr>
+              ))}
             </tbody>
           </table>
           {/* Another table to display the statistics */}
