@@ -1,0 +1,80 @@
+.budget-app {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.budget-app h1 {
+  text-align: center;
+  color: #333;
+}
+
+.budget-app label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #555;
+}
+
+.budget-app input[type="number"],
+.budget-app input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.budget-app button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.budget-app button:hover {
+  background-color: #0056b3;
+}
+
+.budget-app table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.budget-app .table-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.budget-app th,
+.budget-app td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.budget-app th {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.budget-app td {
+  background-color: #fff;
+  color: #555;
+}
+
+.budget-app tr:nth-child(even) td {
+  background-color: #f9f9f9;
+}
