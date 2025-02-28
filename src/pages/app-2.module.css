@@ -1,0 +1,62 @@
+.app-2 {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.app-2 h1,
+.app-2 h2 {
+  color: #333;
+  text-align: center;
+}
+
+.app-2 div {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.app-2 label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.app-2 input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.app-2 table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.app-2 th,
+.app-2 td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.app-2 th {
+  background-color: #f2f2f2;
+}
+
+.app-2 tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.app-2 tbody tr:hover {
+  background-color: #f1f1f1;
+}
