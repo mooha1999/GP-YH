@@ -1,4 +1,4 @@
-.app-2 {
+.inputs-outputs-form {
   margin: 20px auto;
   padding: 20px;
   max-width: 800px;
@@ -7,13 +7,13 @@
   border-radius: 8px;
 }
 
-.app-2 h1,
-.app-2 h2 {
+.inputs-outputs-form h1,
+.inputs-outputs-form h2 {
   color: #333;
   text-align: center;
 }
 
-.app-2 div {
+.inputs-outputs-form div {
   margin: 20px auto;
   padding: 20px;
   max-width: 800px;
@@ -22,47 +22,47 @@
   border-radius: 8px;
 }
 
-.app-2 label {
+.inputs-outputs-form label {
   display: block;
   margin: 10px 0;
   font-weight: bold;
 }
 
-.app-2 input[type="number"],
-.app-2 input[type="text"] {
-  width: 100%;
+.inputs-outputs-form input[type="number"],
+.inputs-outputs-form input[type="text"] {
+  width: -webkit-fill-available;
   padding: 8px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.app-2 table {
+.inputs-outputs-form table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.app-2 th,
-.app-2 td {
+.inputs-outputs-form th,
+.inputs-outputs-form td {
   padding: 10px;
   text-align: center;
   border: 1px solid #ddd;
 }
 
-.app-2 th {
+.inputs-outputs-form th {
   background-color: #f2f2f2;
 }
 
-.app-2 tbody tr:nth-child(even) {
+.inputs-outputs-form tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.app-2 tbody tr:hover {
+.inputs-outputs-form tbody tr:hover {
   background-color: #f1f1f1;
 }
 
-.app-2 button {
+.inputs-outputs-form button {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
@@ -73,14 +73,14 @@
   cursor: pointer;
 }
 
-.app-2 button:hover {
+.inputs-outputs-form button:hover {
   background-color: #0056b3;
 }
 
-.app-2 .remove {
+.inputs-outputs-form .remove {
   background-color: #dc3545;
 }
 
-.app-2 .remove:hover {
+.inputs-outputs-form .remove:hover {
   background-color: #c82333;
 }
