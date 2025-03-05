@@ -3,7 +3,6 @@ import { useFieldArray, useForm } from "react-hook-form";
 import styles from "./index.module.css";
 import { useEffect, useState } from "react";
 import App2DataDisplay, { App2DataDisplayProps } from "../App2DataDisplay";
-import { App2Provider } from "../../contexts/app-2-provider";
 
 interface InputsOutputsFormProps {
   hospitalsCount: number;
@@ -83,7 +82,10 @@ export default function InputsOutputsForm({
                   <input
                     type="number"
                     {...controlHospitalNames.register(
-                      `hospitals.${index}.inputs.${inputIndex}.value`
+                      `hospitals.${index}.inputs.${inputIndex}.value`,
+                      {
+                        valueAsNumber: true,
+                      }
                     )}
                   />
                 </label>
@@ -97,7 +99,10 @@ export default function InputsOutputsForm({
                   <input
                     type="number"
                     {...controlHospitalNames.register(
-                      `hospitals.${index}.outputs.${outputIndex}.value`
+                      `hospitals.${index}.outputs.${outputIndex}.value`,
+                      {
+                        valueAsNumber: true,
+                      }
                     )}
                   />
                 </label>
@@ -107,11 +112,7 @@ export default function InputsOutputsForm({
         ))}
         <button type="submit">Submit</button>
       </form>
-      {formValue && (
-        <App2Provider>
-          <App2DataDisplay hospitals={formValue} />
-        </App2Provider>
-      )}
+      {formValue && <App2DataDisplay hospitals={formValue} />}
     </>
   );
 }
