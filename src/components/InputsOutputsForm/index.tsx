@@ -1,8 +1,9 @@
 import { useFieldArray, useForm } from "react-hook-form";
 
 import styles from "./index.module.css";
-import { useEffect } from "react";
-import App2DataDisplay from "../App2DataDisplay";
+import { useEffect, useState } from "react";
+import App2DataDisplay, { App2DataDisplayProps } from "../App2DataDisplay";
+import { App2Provider } from "../../contexts/app-2-provider";
 
 interface InputsOutputsFormProps {
   hospitalsCount: number;
@@ -19,20 +20,20 @@ export default function InputsOutputsForm({
   inputs,
   outputs,
 }: InputsOutputsFormProps) {
-  const {
-    control: controlHospitalNames,
-    handleSubmit,
-    formState,
-    getValues,
-  } = useForm<HospitalsData>({
-    defaultValues: {
-      hospitals: Array.from({ length: hospitalsCount }, () => ({
-        name: "",
-        inputs: inputs.map((input) => ({ name: input.name, value: 0 })),
-        outputs: outputs.map((output) => ({ name: output.name, value: 0 })),
-      })),
-    },
-  });
+  const [formValue, setFormValue] = useState<
+    App2DataDisplayProps["hospitals"] | null
+  >(null);
+
+  const { control: controlHospitalNames, handleSubmit } =
+    useForm<HospitalsData>({
+      defaultValues: {
+        hospitals: Array.from({ length: hospitalsCount }, () => ({
+          name: "",
+          inputs: inputs.map((input) => ({ name: input.name, value: 0 })),
+          outputs: outputs.map((output) => ({ name: output.name, value: 0 })),
+        })),
+      },
+    });
 
   const { fields: hospitalsNamesFields, replace } = useFieldArray({
     name: "hospitals",
@@ -51,7 +52,12 @@ export default function InputsOutputsForm({
   }, [hospitalsCount, inputs, outputs]);
 
   const submitHandler = handleSubmit((data) => {
-    console.log(data);
+    setFormValue(
+      data.hospitals.map((hospital, index) => ({
+        ...hospital,
+        id: index.toString(),
+      }))
+    );
   });
 
   return (
@@ -101,8 +107,10 @@ export default function InputsOutputsForm({
         ))}
         <button type="submit">Submit</button>
       </form>
-      {formState.isSubmitted && (
-        <App2DataDisplay hospitals={getValues().hospitals} />
+      {formValue && (
+        <App2Provider>
+          <App2DataDisplay hospitals={formValue} />
+        </App2Provider>
       )}
     </>
   );

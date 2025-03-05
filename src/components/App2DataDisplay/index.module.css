@@ -1,0 +1,86 @@
+.app-2-data-display {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.app-2-data-display h1,
+.app-2-data-display h2 {
+  color: #333;
+  text-align: center;
+}
+
+.app-2-data-display div {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.app-2-data-display label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.app-2-data-display input[type="number"],
+.app-2-data-display input[type="text"] {
+  width: -webkit-fill-available;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.app-2-data-display table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.app-2-data-display th,
+.app-2-data-display td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.app-2-data-display th {
+  background-color: #f2f2f2;
+}
+
+.app-2-data-display tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.app-2-data-display tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.app-2-data-display button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.app-2-data-display button:hover {
+  background-color: #0056b3;
+}
+
+.app-2-data-display .remove {
+  background-color: #dc3545;
+}
+
+.app-2-data-display .remove:hover {
+  background-color: #c82333;
+}
