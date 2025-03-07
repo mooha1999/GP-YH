@@ -48,9 +48,11 @@ export default function App2DataDisplay({ hospitals }: App2DataDisplayProps) {
     );
   });
 
-  const ioPercentages = Array.from({ length: inputsCount }).map((_, index) => {
-    return (averageOutputs[index] * 100) / averageInputs[index];
-  });
+  const ioPercentages = Array.from({ length: hospitals.length }).map(
+    (_, index) => {
+      return (averageOutputs[index] * 100) / averageInputs[index];
+    }
+  );
 
   const matrices = hospitals.map((hospital) => {
     const inputs = hospital.inputs.map((input) => input.value);
@@ -62,6 +64,49 @@ export default function App2DataDisplay({ hospitals }: App2DataDisplayProps) {
     });
     return matrix;
   });
+
+  const meansMatrix = matrices.reduce((acc, matrix) => {
+    return matrix.map((row, i) => {
+      return row.map((value, j) => {
+        return acc[i][j] + value;
+      });
+    });
+  });
+
+  const maxMatrix = matrices.reduce((acc, matrix) => {
+    return matrix.map((row, i) => {
+      return row.map((value, j) => {
+        return Math.max(acc[i][j], value);
+      });
+    });
+  });
+
+  // create a matrix of meansMatrix against the maxMatrix
+  const meansMaxMatrix = meansMatrix.map((row, i) => {
+    return row.map((value, j) => {
+      return value / maxMatrix[i][j];
+    });
+  });
+
+  // get the sum of all the values in the meansMaxMatrix and divide by the number of inputs * number of outputs
+  const meansMaxMartixAverage =
+    meansMaxMatrix.reduce((acc, row) => {
+      return acc + row.reduce((acc, value) => acc + value, 0);
+    }, 0) /
+    (inputsCount * outputsCount);
+
+  //get the standard deviation of the meansMaxMatrix
+  const meansMaxMatrixStandardDeviation = Math.sqrt(
+    meansMaxMatrix.reduce((acc, row) => {
+      return (
+        acc +
+        row.reduce((acc, value) => {
+          return acc + Math.pow(value - meansMaxMartixAverage, 2);
+        }, 0)
+      );
+    }, 0) /
+      (inputsCount * outputsCount)
+  );
 
   // create an array of means that will calculate the average of each input/output in each hospital
   const means = Array.from({ length: inputsCount + outputsCount }).map(
@@ -195,6 +240,76 @@ export default function App2DataDisplay({ hospitals }: App2DataDisplayProps) {
           </tbody>
         </table>
       ))}
+      {/* Group Means Matrix */}
+      <h2>Group-Means Matrix</h2>
+      <table>
+        <tbody>
+          {meansMatrix.map((row, i) => (
+            <tr key={i}>
+              {row.map((value, j) => (
+                <td key={j}>{(value / hospitals.length).toFixed(2)}</td>
+              ))}
+              <th>{hospitals[0].outputs[i].name}</th>
+            </tr>
+          ))}
+          <tr>
+            {hospitals[0].inputs.map((input, i) => (
+              <th key={i}>{input.name}</th>
+            ))}
+            <th></th>
+          </tr>
+        </tbody>
+      </table>
+      {/* Max Matrix */}
+      <h2>Max Matrix</h2>
+      <table>
+        <tbody>
+          {maxMatrix.map((row, i) => (
+            <tr key={i}>
+              {row.map((value, j) => (
+                <td key={j}>{value.toFixed(2)}</td>
+              ))}
+              <th>{hospitals[0].outputs[i].name}</th>
+            </tr>
+          ))}
+          <tr>
+            {hospitals[0].inputs.map((input, i) => (
+              <th key={i}>{input.name}</th>
+            ))}
+            <th></th>
+          </tr>
+        </tbody>
+      </table>
+      {/* Means/Max Matrix */}
+      <h2>Group-Means/Max Matrix</h2>
+      <table>
+        <tbody>
+          {meansMaxMatrix.map((row, i) => (
+            <tr key={i}>
+              {row.map((value, j) => (
+                <td key={j}>{value.toFixed(2)}</td>
+              ))}
+              <th>{hospitals[0].outputs[i].name}</th>
+            </tr>
+          ))}
+          <tr>
+            {hospitals[0].inputs.map((input, i) => (
+              <th key={i}>{input.name}</th>
+            ))}
+            <th></th>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tr>
+          <th>Mean Group</th>
+          <td>{meansMaxMartixAverage.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <th>Std Group</th>
+          <td>{meansMaxMatrixStandardDeviation.toFixed(2)}</td>
+        </tr>
+      </table>
     </div>
   );
 }
