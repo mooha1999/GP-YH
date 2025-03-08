@@ -5,8 +5,11 @@ export interface App2DataDisplayProps {
   evaluationRate: EvaluationRate;
 }
 
-export default function App2DataDisplay({ hospitals }: App2DataDisplayProps) {
-  // console.log(hospitals);
+export default function App2DataDisplay({
+  hospitals,
+  evaluationRate,
+}: App2DataDisplayProps) {
+  console.log(evaluationRate);
   const inputsCount = hospitals[0].inputs.length;
   const outputsCount = hospitals[0].outputs.length;
 
@@ -140,9 +143,17 @@ export default function App2DataDisplay({ hospitals }: App2DataDisplayProps) {
       />
       {/* Averages*/}
       <h2>Averages</h2>
-      <Averages averageInputs={averageInputs} averageOutputs={averageOutputs} />
+      {evaluationRate !== "BOTH" && (
+        <Averages
+          evaluationRate={evaluationRate}
+          averageInputs={averageInputs}
+          averageOutputs={averageOutputs}
+        />
+      )}
       {/* I/O Percentages */}
-      <IO_Percentages ioPercentages={ioPercentages} />
+      {evaluationRate === "BOTH" && (
+        <IO_Percentages ioPercentages={ioPercentages} />
+      )}
       {/* Means */}
       <h2>Means-loc</h2>
       <Means means={means} inputsCount={inputsCount} hospitals={hospitals} />
@@ -487,25 +498,31 @@ function Percentages({
 function Averages({
   averageInputs,
   averageOutputs,
+  evaluationRate,
 }: {
   averageInputs: number[];
   averageOutputs: number[];
+  evaluationRate: EvaluationRate;
 }) {
   return (
     <table>
       <tbody>
-        <tr>
-          <th>Av i/p</th>
-          {averageInputs.map((value, index) => (
-            <td key={index}>{value.toFixed(2)}</td>
-          ))}
-        </tr>
-        <tr>
-          <th>Av o/p</th>
-          {averageOutputs.map((value, index) => (
-            <td key={index}>{value.toFixed(2)}</td>
-          ))}
-        </tr>
+        {evaluationRate === "INPUT" && (
+          <tr>
+            <th>Av i/p</th>
+            {averageInputs.map((value, index) => (
+              <td key={index}>{value.toFixed(2)}</td>
+            ))}
+          </tr>
+        )}
+        {evaluationRate === "OUTPUT" && (
+          <tr>
+            <th>Av o/p</th>
+            {averageOutputs.map((value, index) => (
+              <td key={index}>{value.toFixed(2)}</td>
+            ))}
+          </tr>
+        )}
       </tbody>
     </table>
   );
