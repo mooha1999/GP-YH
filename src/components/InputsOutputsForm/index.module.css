@@ -84,3 +84,24 @@
 .inputs-outputs-form .remove:hover {
   background-color: #c82333;
 }
+
+.inputs-outputs-form .radio-group {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.inputs-outputs-form .radio-group label {
+  margin: 0 10px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.inputs-outputs-form .radio-group input[type="radio"] {
+  margin-right: 5px;
+}
+
+.inputs-outputs-form .radio-group input[type="radio"]:checked + label {
+  font-weight: bold;
+  color: #007bff;
+}

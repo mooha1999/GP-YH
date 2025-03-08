@@ -2,7 +2,10 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 import styles from "./index.module.css";
 import { useEffect, useState } from "react";
-import App2DataDisplay, { App2DataDisplayProps } from "../App2DataDisplay";
+import App2DataDisplay, {
+  App2DataDisplayProps,
+  EvaluationRate,
+} from "../App2DataDisplay";
 
 interface InputsOutputsFormProps {
   hospitalsCount: number;
@@ -19,10 +22,8 @@ export default function InputsOutputsForm({
   inputs,
   outputs,
 }: InputsOutputsFormProps) {
-  const [formValue, setFormValue] = useState<
-    App2DataDisplayProps["hospitals"] | null
-  >(null);
-
+  const [formValue, setFormValue] = useState<App2DataDisplayProps | null>(null);
+  const [evaluationRate, setEvaluationRate] = useState<EvaluationRate>("BOTH");
   const { control: controlHospitalNames, handleSubmit } =
     useForm<HospitalsData>({
       defaultValues: {
@@ -51,12 +52,13 @@ export default function InputsOutputsForm({
   }, [hospitalsCount, inputs, outputs]);
 
   const submitHandler = handleSubmit((data) => {
-    setFormValue(
-      data.hospitals.map((hospital, index) => ({
+    setFormValue({
+      hospitals: data.hospitals.map((hospital, index) => ({
         ...hospital,
         id: index.toString(),
-      }))
-    );
+      })),
+      evaluationRate: "BOTH",
+    });
   });
 
   return (
@@ -110,9 +112,48 @@ export default function InputsOutputsForm({
             </div>
           </div>
         ))}
+        <div>
+          <h2>Evaluation rate</h2>
+          <label>
+            <input
+              type="radio"
+              name="evaluationRate"
+              value="INPUT"
+              checked={evaluationRate === "INPUT"}
+              onChange={() => setEvaluationRate("INPUT")}
+            />
+            Inputs
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="evaluationRate"
+              value="OUTPUT"
+              checked={evaluationRate === "OUTPUT"}
+              onChange={() => setEvaluationRate("OUTPUT")}
+            />
+            Outputs
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="evaluationRate"
+              value="BOTH"
+              checked={evaluationRate === "BOTH"}
+              onChange={() => setEvaluationRate("BOTH")}
+            />
+            Both
+          </label>
+        </div>
         <button type="submit">Submit</button>
       </form>
-      {formValue && <App2DataDisplay hospitals={formValue} />}
+
+      {formValue && (
+        <App2DataDisplay
+          hospitals={formValue.hospitals}
+          evaluationRate={formValue.evaluationRate}
+        />
+      )}
     </>
   );
 }

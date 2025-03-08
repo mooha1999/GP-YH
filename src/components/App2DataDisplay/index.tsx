@@ -2,6 +2,7 @@ import styles from "./index.module.css";
 
 export interface App2DataDisplayProps {
   hospitals: Hospitals;
+  evaluationRate: EvaluationRate;
 }
 
 export default function App2DataDisplay({ hospitals }: App2DataDisplayProps) {
@@ -421,14 +422,19 @@ function DataDisplay({
       </thead>
       <tbody>
         {data.map((row, index) => (
-          <tr key={index}>
+          <tr
+            key={index}
+            style={{
+              backgroundColor: index < inputsCount ? "#e0f7fa" : "#ffe0b2",
+            }}
+          >
             {row.map((value, index) => (
               <td key={index}>{value}</td>
             ))}
             <td>
               {index < inputsCount
-                ? hospitals[0].inputs[index].name
-                : hospitals[0].outputs[index - inputsCount].name}
+                ? `${hospitals[0].inputs[index].name} (I)`
+                : `${hospitals[0].outputs[index - inputsCount].name} (O)`}
             </td>
           </tr>
         ))}
@@ -526,3 +532,5 @@ type Hospitals = {
   inputs: { name: string; value: number }[];
   outputs: { name: string; value: number }[];
 }[];
+
+export type EvaluationRate = "INPUT" | "OUTPUT" | "BOTH";
