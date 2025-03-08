@@ -57,7 +57,7 @@ export default function InputsOutputsForm({
         ...hospital,
         id: index.toString(),
       })),
-      evaluationRate: "BOTH",
+      evaluationRate,
     });
   });
 
@@ -151,7 +151,7 @@ export default function InputsOutputsForm({
       {formValue && (
         <App2DataDisplay
           hospitals={formValue.hospitals}
-          evaluationRate={formValue.evaluationRate}
+          evaluationRate={evaluationRate}
         />
       )}
     </>
