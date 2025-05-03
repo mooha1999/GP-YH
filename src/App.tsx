@@ -1,6 +1,7 @@
 import "./App.css";
 import BudgetTracking from "./pages/budget-tracking";
 import App2 from "./pages/app-2";
+import App3 from "./pages/app-3";
 import { Route, Link, Routes } from "react-router";
 
 function App() {
@@ -18,11 +19,17 @@ function App() {
               App 2
             </Link>
           </li>
+          <li>
+            <Link to="/app-3" className="nav-link">
+              App 3
+            </Link>
+          </li>
         </ul>
       </nav>
       <Routes>
         <Route path="/budget-tracking" element={<BudgetTracking />} />
         <Route path="/app-2" element={<App2 />} />
+        <Route path="/app-3" element={<App3 />} />
       </Routes>
     </div>
   );
