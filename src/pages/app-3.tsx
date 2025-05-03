@@ -44,7 +44,7 @@ export default function App3() {
       meanWaitingTime: 0,
       meanServiceTime: 0,
       meanPatients: 0,
-    })) satisfies ClinicData[];
+    }));
     setClinicsData(clinics);
   }, [clinicTypesCount]);
 
