@@ -1,6 +1,5 @@
 import { ClinicInputs, ClinicOutputs } from "../app-3-result";
-import { lazy } from "react";
-const Plot = lazy(() => import("react-plotly.js"));
+import Plot from "react-plotly.js";
 
 interface Props {
   inputs: ClinicInputs;
@@ -49,6 +48,14 @@ export default function Pwfs({ inputs, metrics }: Props) {
             y: displayData.probabilityWaitingForService.value,
             type: "bar",
             marker: { color: "blue" },
+            name: "Probability Waiting For Service",
+            mode: "lines+markers",
+            line: { color: "blue", width: 2 },
+            text: displayData.probabilityWaitingForService.value.map((val) =>
+              val.toFixed(2)
+            ),
+            textposition: "auto",
+            hoverinfo: "text",
           },
         ]}
         layout={{
