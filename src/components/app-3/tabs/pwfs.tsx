@@ -1,5 +1,6 @@
 import { ClinicInputs, ClinicOutputs } from "../app-3-result";
-import Plot from "react-plotly.js";
+import { lazy } from "react";
+const Plot = lazy(() => import("react-plotly.js"));
 
 interface Props {
   inputs: ClinicInputs;
