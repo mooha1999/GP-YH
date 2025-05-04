@@ -6,6 +6,9 @@ interface Props {
 }
 
 export default function QueueTab({ inputs, metrics }: Props) {
-  const meanWaitingTime = inputs.meansWaitingTime.value;
+  console.log("QueueTab inputs", inputs);
+  console.log("QueueTab metrics", metrics);
+  // const meansWaitingTime = inputs.meansWaitingTime.value;
+
   return <></>;
 }
