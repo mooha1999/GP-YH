@@ -3,6 +3,8 @@ import { ClinicData } from "../../pages/app-3";
 import InptutQueueOutputTab from "./tabs/input-queue-output";
 import DoctorTap from "./tabs/doctor";
 import PatientCycleTab from "./tabs/patient-cycle";
+import QueueTab from "./tabs/queue";
+import Pwfs from "./tabs/pwfs";
 
 export interface App3ResultProps {
   clinicsData: ClinicData[];
@@ -141,6 +143,14 @@ export default function App3Result({ clinicsData }: App3ResultProps) {
     {
       label: "input queue output",
       content: <InptutQueueOutputTab inputs={inputs} metrics={metrics} />,
+    },
+    {
+      label: "queue",
+      content: <QueueTab inputs={inputs} metrics={metrics} />,
+    },
+    {
+      label: "p(wfs)",
+      content: <Pwfs inputs={inputs} metrics={metrics} />,
     },
     {
       label: "patient cycle",
