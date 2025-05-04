@@ -5,6 +5,7 @@ import DoctorTap from "./tabs/doctor";
 import PatientCycleTab from "./tabs/patient-cycle";
 import QueueTab from "./tabs/queue";
 import Pwfs from "./tabs/pwfs";
+import SystemTab from "./tabs/system";
 
 export interface App3ResultProps {
   clinicsData: ClinicData[];
@@ -147,6 +148,10 @@ export default function App3Result({ clinicsData }: App3ResultProps) {
     {
       label: "queue",
       content: <QueueTab inputs={inputs} metrics={metrics} />,
+    },
+    {
+      label: "system",
+      content: <SystemTab inputs={inputs} metrics={metrics} />,
     },
     {
       label: "p(wfs)",
