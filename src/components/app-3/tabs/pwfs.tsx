@@ -62,6 +62,7 @@ export default function Pwfs({ inputs, metrics }: Props) {
           title: "Probability Waiting For Service",
           xaxis: { title: "Labels" },
           yaxis: { title: "Probability" },
+          showlegend: true,
         }}
         style={{ width: "100%", height: "400px" }}
         config={{ responsive: true, displayModeBar: false }}

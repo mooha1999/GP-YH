@@ -126,34 +126,41 @@ export default function App2DataDisplay({
 
   return (
     <div className={styles["app-2-data-display"]}>
-      {/* Data Display */}
-      <h2>Data Display</h2>
-      <DataDisplay
-        hospitals={hospitals}
-        data={data}
-        inputsCount={inputsCount}
-      />
-      {/* Percentages */}
-      <h2>Percentages</h2>
-      <Percentages
-        hospitals={hospitals}
-        data={data}
-        totals={totals}
-        inputsCount={inputsCount}
-      />
-      {/* Averages*/}
-      <h2>Averages</h2>
-      {evaluationRate !== "BOTH" && (
-        <Averages
-          evaluationRate={evaluationRate}
-          averageInputs={averageInputs}
-          averageOutputs={averageOutputs}
-        />
-      )}
-      {/* I/O Percentages */}
-      {evaluationRate === "BOTH" && (
-        <IO_Percentages ioPercentages={ioPercentages} />
-      )}
+      {/* I am using tailwindcss for styling */}
+      <main className="grid grid-cols-2 gap-4">
+        <main>
+          {/* Data Display */}
+          <h2>Data Display</h2>
+          <DataDisplay
+            hospitals={hospitals}
+            data={data}
+            inputsCount={inputsCount}
+          />
+        </main>
+        <main>
+          {/* Percentages */}
+          <h2>Percentages</h2>
+          <Percentages
+            hospitals={hospitals}
+            data={data}
+            totals={totals}
+            inputsCount={inputsCount}
+          />
+          {/* Averages*/}
+          <h2>Averages</h2>
+          {evaluationRate !== "BOTH" && (
+            <Averages
+              evaluationRate={evaluationRate}
+              averageInputs={averageInputs}
+              averageOutputs={averageOutputs}
+            />
+          )}
+          {/* I/O Percentages */}
+          {evaluationRate === "BOTH" && (
+            <IO_Percentages ioPercentages={ioPercentages} />
+          )}
+        </main>
+      </main>
       {/* Means */}
       <h2>Means-loc</h2>
       <Means means={means} inputsCount={inputsCount} hospitals={hospitals} />

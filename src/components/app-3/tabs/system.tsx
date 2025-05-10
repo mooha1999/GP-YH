@@ -111,6 +111,7 @@ export default function SystemTab({ inputs, metrics }: Props) {
           title: "System Metrics",
           xaxis: { title: "Type" },
           yaxis: { title: "Value" },
+          showlegend: true,
         }}
         config={{ responsive: true, displayModeBar: false }}
       />
@@ -127,6 +128,7 @@ export default function SystemTab({ inputs, metrics }: Props) {
           title: "System Metrics",
           xaxis: { title: "Type" },
           yaxis: { title: "Value" },
+          showlegend: true,
         }}
         config={{ responsive: true, displayModeBar: false }}
       />
