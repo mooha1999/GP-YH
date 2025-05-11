@@ -290,6 +290,7 @@ export default function QueueTab({ inputs, metrics }: Props) {
           yaxis: { title: "Mean Waiting Time" },
           showlegend: true,
         }}
+        config={{ responsive: true, displayModeBar: false }}
       />
     </div>
   );
