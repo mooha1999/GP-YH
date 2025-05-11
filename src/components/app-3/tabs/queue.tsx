@@ -225,7 +225,7 @@ export default function QueueTab({ inputs, metrics }: Props) {
             </td>
           </tr>
           <tr className="border-b">
-            <td className="px-4 py-2"># of Chairs</td>
+            <td className="px-4 py-2"># of Chairs(patients only)</td>
             <td className="px-4 py-2">
               {(
                 (20 *
@@ -238,7 +238,7 @@ export default function QueueTab({ inputs, metrics }: Props) {
             </td>
           </tr>
           <tr className="border-b">
-            <td className="px-4 py-2"># of Chairs</td>
+            <td className="px-4 py-2"># of Chairs(patient + مرافق)</td>
             <td className="px-4 py-2">
               {(
                 (2 *
