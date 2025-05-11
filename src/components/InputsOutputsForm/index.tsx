@@ -144,6 +144,16 @@ export default function InputsOutputsForm({
             />
             Both
           </label>
+          <label>
+            <input
+              type="radio"
+              name="evaluationRate"
+              value="RATE"
+              checked={evaluationRate === "RATE"}
+              onChange={() => setEvaluationRate("RATE")}
+            />
+            Rate
+          </label>
         </div>
         <button type="submit">Submit</button>
       </form>
