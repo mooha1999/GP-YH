@@ -15,6 +15,11 @@ export default function OneATM() {
   //    service time: NORMINV(b,2,0.5)
   //    completion time: service time + service start time
   //    time in system: completion time - arrival time
+  // 3. the totals and the averages of the following:
+  //    interarrival time
+  //    waiting time
+  //    service time
+  //    time in system
 
   const atmData = [];
   const randoms: {
@@ -24,6 +29,10 @@ export default function OneATM() {
   const iterations = 100;
   let previousCompletionTime = 0;
   let previousArrivalTime = 0;
+  let totalServiceTime = 0;
+  let totalWaitingTime = 0;
+  let totalInterarrivalTime = 0;
+  let totalTimeInSystem = 0;
   for (let i = 0; i < iterations; i++) {
     const a = Math.random();
     const b = Math.random();
@@ -53,6 +62,10 @@ export default function OneATM() {
     });
     previousCompletionTime = completionTime;
     previousArrivalTime = arrivalTime;
+    totalServiceTime += serviceTime;
+    totalWaitingTime += waitingTime;
+    totalInterarrivalTime += interarrivalTime;
+    totalTimeInSystem += timeInSystem;
   }
 
   // display the 2 arrays in 2 tables beside each other
@@ -122,6 +135,46 @@ export default function OneATM() {
                 </td>
               </tr>
             ))}
+            <tr>
+              <td colSpan={3} className="border border-gray-300 px-2 py-1">
+                Totals
+              </td>
+              <td className="border border-gray-300 px-2 py-1">
+                {totalInterarrivalTime.toFixed(2)}
+              </td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1">
+                {totalWaitingTime.toFixed(2)}
+              </td>
+              <td className="border border-gray-300 px-2 py-1">
+                {totalServiceTime.toFixed(2)}
+              </td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1">
+                {totalTimeInSystem.toFixed(2)}
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={3} className="border border-gray-300 px-2 py-1">
+                Averages
+              </td>
+              <td className="border border-gray-300 px-2 py-1">
+                {(totalInterarrivalTime / iterations).toFixed(2)}
+              </td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1">
+                {(totalWaitingTime / iterations).toFixed(2)}
+              </td>
+              <td className="border border-gray-300 px-2 py-1">
+                {(totalServiceTime / iterations).toFixed(2)}
+              </td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1">
+                {(totalTimeInSystem / iterations).toFixed(2)}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
