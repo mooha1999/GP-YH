@@ -11,7 +11,7 @@ export default function OneATM() {
   //        then service start time = arrival time, else service start time = previous completion time
   //    waiting time:
   //      if service start time >= previous completion time((we will mention this later) if not first, if first 0):
-  //        then waiting time = 0, else waiting time = previous completion time - service start time
+  //        then waiting time = 0, else waiting time = previous completion time - arrival time
   //    service time: NORMINV(b,2,0.5)
   //    completion time: service time + service start time
   //    time in system: completion time - arrival time
@@ -46,7 +46,7 @@ export default function OneATM() {
     const waitingTime =
       i === 0 || serviceStartTime >= previousCompletionTime
         ? 0
-        : previousCompletionTime - serviceStartTime;
+        : previousCompletionTime - arrivalTime;
     const serviceTime = Math.sqrt(-2 * Math.log(b)) * Math.cos(2 * Math.PI * b);
     const completionTime = serviceTime + serviceStartTime;
     const timeInSystem = completionTime - arrivalTime;
