@@ -1,5 +1,5 @@
 .budget-app {
-  max-width: 800px;
+  width: 100% !important;
   margin: 50px auto;
   padding: 20px;
   background-color: #fff;
