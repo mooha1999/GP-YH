@@ -102,13 +102,19 @@ export default function App2DataDisplay({
   );
 
   //create an array of matrices using the matrices array againt the maxMatrix
-  const meansMaxMatrices = matrices.map((matrix) => {
-    return matrix.map((row, i) => {
+  const meansMaxMatrices = matrices.map((matrix, index) => {
+    const ret = matrix.map((row, i) => {
       return row.map((value, j) => {
         return value / maxMatrix[i][j];
       });
     });
+
+    return {
+      meansMaxMatrices: ret,
+      name: hospitals[index].name,
+    };
   });
+  console.log("meansMaxMatrices", meansMaxMatrices);
 
   // create an array of means that will calculate the average of each input/output in each hospital
   const means = Array.from({ length: inputsCount + outputsCount }).map(
@@ -165,13 +171,15 @@ export default function App2DataDisplay({
       )}
       {evaluationRate === "RATE" && (
         <>
+          <main className="flex gap-4">
+            <Means
+              means={means}
+              inputsCount={inputsCount}
+              hospitals={hospitals}
+              data={data}
+            />
+          </main>
           {/* Means */}
-          <h2>Means-loc</h2>
-          <Means
-            means={means}
-            inputsCount={inputsCount}
-            hospitals={hospitals}
-          />
           {/* Matrices */}
           <h2>Matrices</h2>
           <Matrices matrices={matrices} hospitals={hospitals} />
@@ -207,7 +215,10 @@ function MeansMaxMatrics({
   meansMaxMatrices,
   hospitals,
 }: {
-  meansMaxMatrices: number[][][];
+  meansMaxMatrices: {
+    meansMaxMatrices: number[][];
+    name: string;
+  }[];
   hospitals: {
     id: string;
     name: string;
@@ -216,50 +227,61 @@ function MeansMaxMatrics({
   }[];
 }) {
   return (
-    <>
-      {meansMaxMatrices.map((matrix, i) => {
-        // calculate the average and standard deviation of the matrix
-        const average = matrix.reduce((acc, row) => {
-          return acc + row.reduce((acc, value) => acc + value, 0);
-        }, 0);
-        const standardDeviation = Math.sqrt(
-          matrix.reduce((acc, row) => {
-            return (
-              acc +
-              row.reduce((acc, value) => {
-                return acc + Math.pow(value - average, 2);
-              }, 0)
-            );
-          }, 0)
-        );
-        return (
-          <div>
-            <table key={hospitals[i].id}>
-              <tbody>
-                {matrix.map((row, j) => (
-                  <tr key={j}>
-                    {row.map((value, k) => (
-                      <td key={k}>{value.toFixed(2)}</td>
-                    ))}
-                    <th>{hospitals[i].outputs[j].name}</th>
-                  </tr>
-                ))}
-                <tr>
-                  {matrix[0].map((_, k) => (
-                    <th key={k}>{hospitals[i].inputs[k].name}</th>
+    <div className="flex gap-4 overflow-auto">
+      {meansMaxMatrices
+        .sort((a, b) => {
+          // sort the matrices by the average of the meansMaxMatrix
+          const averageA = a.meansMaxMatrices.reduce((acc, row) => {
+            return acc + row.reduce((acc, value) => acc + value, 0);
+          }, 0);
+          const averageB = b.meansMaxMatrices.reduce((acc, row) => {
+            return acc + row.reduce((acc, value) => acc + value, 0);
+          }, 0);
+          return averageB - averageA;
+        })
+        .map((matrix, i) => {
+          // calculate the average and standard deviation of the matrix
+          const average = matrix.meansMaxMatrices.reduce((acc, row) => {
+            return acc + row.reduce((acc, value) => acc + value, 0);
+          }, 0);
+          const standardDeviation = Math.sqrt(
+            matrix.meansMaxMatrices.reduce((acc, row) => {
+              return (
+                acc +
+                row.reduce((acc, value) => {
+                  return acc + Math.pow(value - average, 2);
+                }, 0)
+              );
+            }, 0)
+          );
+          return (
+            <div>
+              <table key={hospitals[i].id}>
+                <tbody>
+                  {matrix.meansMaxMatrices.map((row, j) => (
+                    <tr key={j}>
+                      {row.map((value, k) => (
+                        <td key={k}>{value.toFixed(2)}</td>
+                      ))}
+                      <th>{hospitals[i].outputs[j].name}</th>
+                    </tr>
                   ))}
-                  <th>{hospitals[i].name}</th>
-                </tr>
-              </tbody>
-            </table>
-            <StatsTable
-              meansMaxMartixAverage={average}
-              meansMaxMatrixStandardDeviation={standardDeviation}
-            />
-          </div>
-        );
-      })}
-    </>
+                  <tr>
+                    {matrix.meansMaxMatrices[0].map((_, k) => (
+                      <th key={k}>{hospitals[i].inputs[k].name}</th>
+                    ))}
+                    <th>{matrix.name}</th>
+                  </tr>
+                </tbody>
+              </table>
+              <StatsTable
+                meansMaxMartixAverage={average}
+                meansMaxMatrixStandardDeviation={standardDeviation}
+              />
+            </div>
+          );
+        })}
+    </div>
   );
 }
 
@@ -380,7 +402,7 @@ function Matrices({
 }) {
   console.log(matrices);
   return (
-    <>
+    <div className="flex gap-4 overflow-auto">
       {matrices.map((matrix, i) => (
         <table key={hospitals[i].id}>
           <tbody>
@@ -401,7 +423,7 @@ function Matrices({
           </tbody>
         </table>
       ))}
-    </>
+    </div>
   );
 }
 
@@ -409,22 +431,41 @@ function Means({
   means,
   inputsCount,
   hospitals,
+  data,
 }: {
   means: number[];
   inputsCount: number;
   hospitals: Hospitals;
+  data: number[][];
 }) {
   return (
     <table>
+      <thead>
+        <tr>
+          {hospitals.map((hospital) => (
+            <th key={hospital.id}>{hospital.name}</th>
+          ))}
+          <th>I/O</th>
+          <th>Means-loc</th>
+        </tr>
+      </thead>
       <tbody>
-        {means.map((value, index) => (
-          <tr key={index}>
-            <td>{value.toFixed(2)}</td>
-            <th>
+        {data.map((row, index) => (
+          <tr
+            key={index}
+            style={{
+              backgroundColor: index < inputsCount ? "#e0f7fa" : "#ffe0b2",
+            }}
+          >
+            {row.map((value, index) => (
+              <td key={index}>{value}</td>
+            ))}
+            <td>
               {index < inputsCount
-                ? hospitals[0].inputs[index].name
-                : hospitals[0].outputs[index - inputsCount].name}
-            </th>
+                ? `${hospitals[0].inputs[index].name} (I)`
+                : `${hospitals[0].outputs[index - inputsCount].name} (O)`}
+            </td>
+            <td>{means[index].toFixed(2)}</td>
           </tr>
         ))}
       </tbody>
