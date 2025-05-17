@@ -113,7 +113,7 @@ export default function InputsOutputsForm({
           </div>
         ))}
         <div>
-          <h2>Evaluation rate</h2>
+          <h2>Evaluation</h2>
           <label>
             <input
               type="radio"
