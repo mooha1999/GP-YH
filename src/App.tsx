@@ -12,22 +12,22 @@ function App() {
         <ul>
           <li>
             <Link to="/budget-tracking" className="nav-link">
-              Budget Tracking
+              Purchase budget estimation
             </Link>
           </li>
           <li>
             <Link to="/app-2" className="nav-link">
-              App 2
+              Hospital Evaluation
             </Link>
           </li>
           <li>
             <Link to="/app-3" className="nav-link">
-              App 3
+              Outpatient Clinic Reports
             </Link>
           </li>
           <li>
             <Link to="/app-4" className="nav-link">
-              App 4
+              ATM simulation
             </Link>
           </li>
         </ul>

@@ -142,7 +142,7 @@ export default function InputsOutputsForm({
               checked={evaluationRate === "BOTH"}
               onChange={() => setEvaluationRate("BOTH")}
             />
-            Both
+            Both Inputs and Outputs
           </label>
           <label>
             <input
