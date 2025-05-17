@@ -149,7 +149,6 @@ function Data({ iterations }: { iterations: number }) {
   // loop through the waiting time and count the frequencies
   for (let i = 0; i < iterations; i++) {
     const waitingTime = Math.floor(Number(atmData[i].waitingTime));
-    console.log(waitingTime);
     if (waitingTime >= 10) {
       waitingTimeFrequencies["More"]++;
     } else {
