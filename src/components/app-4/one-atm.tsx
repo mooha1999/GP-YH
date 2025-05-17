@@ -10,7 +10,7 @@ export default function OneATM() {
   //      if arrival time >= previous completion time((we will mention this later) if not first, if first 0):
   //        then service start time = arrival time, else service start time = previous completion time
   //    waiting time:
-  //      if service start time >= previous completion time((we will mention this later) if not first, if first 0):
+  //      if arrival time >= previous completion time((we will mention this later) if not first, if first 0):
   //        then waiting time = 0, else waiting time = previous completion time - arrival time
   //    service time: NORMINV(b,2,0.5)
   //    completion time: service time + service start time
@@ -44,10 +44,12 @@ export default function OneATM() {
         ? arrivalTime
         : previousCompletionTime;
     const waitingTime =
-      i === 0 || serviceStartTime >= previousCompletionTime
+      i === 0 || arrivalTime >= previousCompletionTime
         ? 0
         : previousCompletionTime - arrivalTime;
-    const serviceTime = Math.sqrt(-2 * Math.log(b)) * Math.cos(2 * Math.PI * b);
+    // NORMINV(b, 2, 0.5) approximation using Box-Muller (mean=2, std=0.5)
+    const serviceTime =
+      2 + 0.5 * (Math.sqrt(-2 * Math.log(b)) * Math.cos(2 * Math.PI * b));
     const completionTime = serviceTime + serviceStartTime;
     const timeInSystem = completionTime - arrivalTime;
     atmData.push({
@@ -78,8 +80,6 @@ export default function OneATM() {
         <table className="border border-gray-300">
           <thead>
             <tr>
-              <th className="border border-gray-300 px-2 py-1">a</th>
-              <th className="border border-gray-300 px-2 py-1">b</th>
               <th className="border border-gray-300 px-2 py-1">
                 Customer Number
               </th>
@@ -101,14 +101,8 @@ export default function OneATM() {
             </tr>
           </thead>
           <tbody>
-            {atmData.map((data, idx) => (
+            {atmData.map((data) => (
               <tr key={data.customerNumber}>
-                <td className="border border-gray-300 px-2 py-1">
-                  {randoms[idx].a.toFixed(2)}
-                </td>
-                <td className="border border-gray-300 px-2 py-1">
-                  {randoms[idx].b.toFixed(2)}
-                </td>
                 <td className="border border-gray-300 px-2 py-1">
                   {data.customerNumber}
                 </td>
