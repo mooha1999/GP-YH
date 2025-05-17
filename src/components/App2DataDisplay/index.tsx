@@ -454,7 +454,7 @@ function Means({
           <tr
             key={index}
             style={{
-              backgroundColor: index < inputsCount ? "#e0f7fa" : "#ffe0b2",
+              backgroundColor: index < inputsCount ? "#f0f0f0" : "#e0e0e0",
             }}
           >
             {row.map((value, index) => (
@@ -497,7 +497,7 @@ function DataDisplay({
           <tr
             key={index}
             style={{
-              backgroundColor: index < inputsCount ? "#e0f7fa" : "#ffe0b2",
+              backgroundColor: index < inputsCount ? "#f0f0f0" : "#e0e0e0",
             }}
           >
             {row.map((value, index) => (
