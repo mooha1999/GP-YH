@@ -1,3 +1,6 @@
+import { useState } from "react";
+import Plot from "react-plotly.js";
+
 export default function TwoATMs() {
   // step by step we will a loop with 100 iterations
   // each iteration we will:
@@ -30,12 +33,30 @@ export default function TwoATMs() {
   //    service time
   //    time in system
 
+  const [iterations, setIterations] = useState(100);
+
+  return (
+    <div className="flex flex-col gap-4">
+      <label>
+        Number of iterations:
+        <input
+          type="number"
+          value={iterations}
+          onChange={(e) => setIterations(Number(e.target.value))}
+          className="border border-gray-300 rounded-md p-2"
+        />
+      </label>
+      <Data iterations={iterations} />
+    </div>
+  );
+}
+
+function Data({ iterations }: { iterations: number }) {
   const atmData = [];
   const randoms: {
     a: number;
     b: number;
   }[] = [];
-  const iterations = 100;
   let previousCompletionTimeATM1 = 0;
   let previousCompletionTimeATM2 = 0;
   let previousArrivalTime = 0;
@@ -95,8 +116,49 @@ export default function TwoATMs() {
     totalTimeInSystem += timeInSystem;
   }
 
+  // create something for storing the frequencies of the waiting time
+  const waitingTimeFrequencies: {
+    [key: string]: number;
+    0: number;
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+    6: number;
+    7: number;
+    8: number;
+    9: number;
+    10: number;
+    More: number;
+  } = {
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    6: 0,
+    7: 0,
+    8: 0,
+    9: 0,
+    10: 0,
+    More: 0,
+  };
+
+  // loop through the waiting time and count the frequencies
+  for (let i = 0; i < iterations; i++) {
+    const waitingTime = Math.floor(Number(atmData[i].waitingTime));
+    console.log(waitingTime);
+    if (waitingTime >= 10) {
+      waitingTimeFrequencies["More"]++;
+    } else {
+      waitingTimeFrequencies[waitingTime]++;
+    }
+  }
+
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <h1>Two ATMs Simulation</h1>
       <div className="flex gap-8">
         <table className="border border-gray-300">
@@ -166,7 +228,7 @@ export default function TwoATMs() {
               </tr>
             ))}
             <tr>
-              <td colSpan={4} className="border border-gray-300 px-2 py-1">
+              <td colSpan={2} className="border border-gray-300 px-2 py-1">
                 Totals
               </td>
               <td className="border border-gray-300 px-2 py-1">
@@ -184,9 +246,11 @@ export default function TwoATMs() {
               <td className="border border-gray-300 px-2 py-1">
                 {totalTimeInSystem.toFixed(2)}
               </td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1"></td>
             </tr>
             <tr>
-              <td colSpan={4} className="border border-gray-300 px-2 py-1">
+              <td colSpan={2} className="border border-gray-300 px-2 py-1">
                 Averages
               </td>
               <td className="border border-gray-300 px-2 py-1">
@@ -204,9 +268,64 @@ export default function TwoATMs() {
               <td className="border border-gray-300 px-2 py-1">
                 {(totalTimeInSystem / iterations).toFixed(2)}
               </td>
+              <td className="border border-gray-300 px-2 py-1"></td>
+              <td className="border border-gray-300 px-2 py-1"></td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div className="flex gap-8 overflow-auto">
+        <h2 className="text-lg font-semibold mt-8 mb-4">
+          Waiting Time Frequencies
+        </h2>
+        <table className="border border-gray-300">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-2 py-1">Waiting Time</th>
+              <th className="border border-gray-300 px-2 py-1">Frequency</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(waitingTimeFrequencies).map(([key, value]) => (
+              <tr key={key}>
+                <td className="border border-gray-300 px-2 py-1">{key}</td>
+                <td className="border border-gray-300 px-2 py-1">{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Plot
+          data={[
+            {
+              x: Object.keys(waitingTimeFrequencies),
+              y: Object.values(waitingTimeFrequencies),
+              type: "bar",
+              marker: { color: "blue" },
+              name: "Waiting Time Frequencies",
+              mode: "lines+markers",
+              line: { color: "blue", width: 2 },
+              text: Object.values(waitingTimeFrequencies).map((val) =>
+                val.toFixed(0)
+              ),
+              textposition: "auto",
+              hoverinfo: "text",
+            },
+          ]}
+          layout={{
+            title: "Waiting Time Frequencies",
+            xaxis: {
+              title: "Waiting Time",
+            },
+            yaxis: {
+              title: "Frequency",
+            },
+          }}
+          config={{
+            responsive: true,
+            displayModeBar: false,
+          }}
+          style={{ width: "100%", height: "400px" }}
+        />
       </div>
     </div>
   );
