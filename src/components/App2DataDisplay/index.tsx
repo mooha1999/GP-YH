@@ -152,6 +152,13 @@ export default function App2DataDisplay({
               data={data}
               totals={totals}
               inputsCount={inputsCount}
+              sortingArray={
+                evaluationRate === "INPUT"
+                  ? averageInputs
+                  : evaluationRate === "OUTPUT"
+                  ? averageOutputs
+                  : ioPercentages
+              }
             />
             {/* Averages*/}
             <h2>Averages</h2>
@@ -520,29 +527,58 @@ function Percentages({
   data,
   totals,
   inputsCount,
+  sortingArray,
 }: {
   hospitals: Hospitals;
   data: number[][];
   totals: number[];
   inputsCount: number;
+  sortingArray: number[];
 }) {
+  // Sort the hospitals based on the sortingArray
+
+  const sortedHospitals = hospitals
+    .map((hospital, index) => ({ ...hospital, index }))
+    .sort((a, b) => sortingArray[b.index] - sortingArray[a.index]);
+
+  // Sort the data based on the sorted hospitals
+  const sortedData = data.map((row) => {
+    return row
+      .map((val, index) => {
+        return { val, index };
+      })
+      .sort((a, b) => {
+        return sortingArray[b.index] - sortingArray[a.index];
+      })
+      .map((item) => item.val);
+  });
+
+  // Sort the totals based on the sorted hospitals
+  const sortedTotals = totals
+    .map((total, index) => {
+      return { total, index };
+    })
+    .sort((a, b) => sortingArray[b.index] - sortingArray[a.index]);
+
   return (
     <table>
       <thead>
         <tr>
           <th>full</th>
-          {hospitals.map((hospital) => (
+          {sortedHospitals.map((hospital) => (
             <th key={hospital.id}>%{hospital.name}</th>
           ))}
           <th>I/O</th>
         </tr>
       </thead>
       <tbody>
-        {data.map((row, i) => (
+        {sortedData.map((row, i) => (
           <tr key={i}>
-            <td>{totals[i]}</td>
+            <td>{sortedTotals[i].total}</td>
             {row.map((value, j) => (
-              <td key={j}>{((value / totals[i]) * 100).toFixed(2)}</td>
+              <td key={j}>
+                {((value / sortedTotals[i].total) * 100).toFixed(2)}
+              </td>
             ))}
             <td>
               {i < inputsCount
@@ -565,13 +601,15 @@ function Averages({
   averageOutputs: number[];
   evaluationRate: EvaluationRate;
 }) {
+  const sortedAverageInputs = [...averageInputs].sort((a, b) => b - a);
+  const sortedAverageOutputs = [...averageOutputs].sort((a, b) => b - a);
   return (
     <table>
       <tbody>
         {evaluationRate === "INPUT" && (
           <tr>
             <th>Av i/p</th>
-            {averageInputs.map((value, index) => (
+            {sortedAverageInputs.map((value, index) => (
               <td key={index}>{value.toFixed(2)}</td>
             ))}
           </tr>
@@ -579,7 +617,7 @@ function Averages({
         {evaluationRate === "OUTPUT" && (
           <tr>
             <th>Av o/p</th>
-            {averageOutputs.map((value, index) => (
+            {sortedAverageOutputs.map((value, index) => (
               <td key={index}>{value.toFixed(2)}</td>
             ))}
           </tr>
@@ -590,12 +628,13 @@ function Averages({
 }
 
 function IO_Percentages({ ioPercentages }: { ioPercentages: number[] }) {
+  const sortedIOPercentages = [...ioPercentages].sort((a, b) => b - a);
   return (
     <table>
       <tbody>
         <tr>
           <th>I/O %</th>
-          {ioPercentages.map((value, index) => (
+          {sortedIOPercentages.map((value, index) => (
             <td key={index}>{value.toFixed(2)}</td>
           ))}
         </tr>
