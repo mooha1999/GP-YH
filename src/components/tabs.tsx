@@ -4,7 +4,7 @@ export function Tabs({ tabs }: TabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full">
       <div className="flex border-b border-gray-300">
         {tabs.map((tab, idx) => (
           <button
@@ -21,7 +21,7 @@ export function Tabs({ tabs }: TabsProps) {
         ))}
       </div>
 
-      <div className="mt-4 p-4 bg-white border border-gray-200 rounded-md shadow-sm overflow-auto">
+      <div className="mt-4 bg-white border border-gray-200 rounded-md shadow-sm overflow-auto">
         {tabs[activeIndex].content}
       </div>
     </div>

@@ -83,7 +83,7 @@ export default function PatientCycleTab({ inputs, metrics }: Props) {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full  ">
       <h2 className="text-lg font-semibold mb-4">Patient Cycle Metrics</h2>
       <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-sm">
         <thead>

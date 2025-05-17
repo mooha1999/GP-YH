@@ -12,7 +12,7 @@ export default function Pwfs({ inputs, metrics }: Props) {
     probabilityWaitingForService: metrics.probabilityWaitingForService,
   };
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full  ">
       <h2 className="text-lg font-semibold mb-4">
         Probability Waiting For Service
       </h2>

@@ -147,7 +147,7 @@ export default function ServiceTimeTab({ inputs }: Props) {
   }, {} as Record<number, number>);
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full  ">
       <h2 className="text-lg font-semibold mb-4">Service Time Metrics</h2>
       <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-sm">
         <thead>
