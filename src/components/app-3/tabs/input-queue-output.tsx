@@ -51,7 +51,7 @@ export default function InputQueueOutputTab({ inputs, metrics }: Props) {
         </tbody>
       </table>
       <h2 className="text-lg font-semibold mt-8 mb-4">
-        Mean Interarrival Time 1/lambda min Statistics
+        Mean Interarrival Time Statistics
       </h2>
       <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-sm">
         <thead>
