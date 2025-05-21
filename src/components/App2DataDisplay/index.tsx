@@ -187,16 +187,16 @@ export default function App2DataDisplay({
           </main>
           {/* Means */}
           {/* Matrices */}
-          <h2>Matrices</h2>
+          <h2 className="m-4">Matrices</h2>
           <Matrices matrices={matrices} hospitals={hospitals} />
           {/* Group Means Matrix */}
           <h2>Group-Means Matrix</h2>
           <GroupMeansMatrix meansMatrix={meansMatrix} hospitals={hospitals} />
           {/* Max Matrix */}
-          <h2>Max Matrix</h2>
+          <h2 className="m-4">Max Matrix</h2>
           <MaxMatrix maxMatrix={maxMatrix} hospitals={hospitals} />
           {/* Means/Max Matrix */}
-          <h2>Group-Means/Max Matrix</h2>
+          <h2 className="m-4">Group-Means/Max Matrix</h2>
           <MeansMaxMatrix
             meansMaxMatrix={meansMaxMatrix}
             hospitals={hospitals}
@@ -206,7 +206,7 @@ export default function App2DataDisplay({
             meansMaxMatrixStandardDeviation={meansMaxMatrixStandardDeviation}
           />
           {/* Means/Max Matrices */}
-          <h2>Means/Max Matrices</h2>
+          <h2 className="m-4">Means/Max Matrices</h2>
           <MeansMaxMatrics
             meansMaxMatrices={meansMaxMatrices}
             hospitals={hospitals}
