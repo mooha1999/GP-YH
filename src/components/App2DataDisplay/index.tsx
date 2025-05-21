@@ -248,9 +248,12 @@ function MeansMaxMatrics({
         })
         .map((matrix, i) => {
           // calculate the average and standard deviation of the matrix
-          const average = matrix.meansMaxMatrices.reduce((acc, row) => {
-            return acc + row.reduce((acc, value) => acc + value, 0);
-          }, 0);
+          const average =
+            matrix.meansMaxMatrices.reduce((acc, row) => {
+              return acc + row.reduce((acc, value) => acc + value, 0);
+            }, 0) /
+            (matrix.meansMaxMatrices.length *
+              matrix.meansMaxMatrices[0].length);
           const standardDeviation = Math.sqrt(
             matrix.meansMaxMatrices.reduce((acc, row) => {
               return (
@@ -461,7 +464,7 @@ function Means({
           <tr
             key={index}
             style={{
-              backgroundColor: index < inputsCount ? "#f0f0f0" : "#e0e0e0",
+              backgroundColor: index < inputsCount ? "#f0f0f0" : "#aaaaaa",
             }}
           >
             {row.map((value, index) => (
@@ -504,7 +507,7 @@ function DataDisplay({
           <tr
             key={index}
             style={{
-              backgroundColor: index < inputsCount ? "#f0f0f0" : "#e0e0e0",
+              backgroundColor: index < inputsCount ? "#f0f0f0" : "#aaaaaa",
             }}
           >
             {row.map((value, index) => (
