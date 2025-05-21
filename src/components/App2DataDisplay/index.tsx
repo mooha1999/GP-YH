@@ -114,7 +114,6 @@ export default function App2DataDisplay({
       name: hospitals[index].name,
     };
   });
-  console.log("meansMaxMatrices", meansMaxMatrices);
 
   // create an array of means that will calculate the average of each input/output in each hospital
   const means = Array.from({ length: inputsCount + outputsCount }).map(
@@ -318,8 +317,8 @@ function StatsTable({
 
 function MeansMaxMatrix({
   meansMaxMatrix,
-  hospitals,
-}: {
+}: // hospitals,
+{
   meansMaxMatrix: number[][];
   hospitals: Hospitals;
 }) {
@@ -331,14 +330,14 @@ function MeansMaxMatrix({
             {row.map((value, j) => (
               <td key={j}>{value.toFixed(2)}</td>
             ))}
-            <th>{hospitals[0].outputs[i].name}</th>
+            {/* <th>{hospitals[0].outputs[i].name}</th> */}
           </tr>
         ))}
         <tr>
-          {hospitals[0].inputs.map((input, i) => (
+          {/* {hospitals[0].inputs.map((input, i) => (
             <th key={i}>{input.name}</th>
           ))}
-          <th></th>
+          <th></th> */}
         </tr>
       </tbody>
     </table>
@@ -347,8 +346,8 @@ function MeansMaxMatrix({
 
 function MaxMatrix({
   maxMatrix,
-  hospitals,
-}: {
+}: // hospitals,
+{
   maxMatrix: number[][];
   hospitals: Hospitals;
 }) {
@@ -360,14 +359,14 @@ function MaxMatrix({
             {row.map((value, j) => (
               <td key={j}>{value.toFixed(2)}</td>
             ))}
-            <th>{hospitals[0].outputs[i].name}</th>
+            {/* <th>{hospitals[0].outputs[i].name}</th> */}
           </tr>
         ))}
         <tr>
-          {hospitals[0].inputs.map((input, i) => (
+          {/* {hospitals[0].inputs.map((input, i) => (
             <th key={i}>{input.name}</th>
           ))}
-          <th></th>
+          <th></th> */}
         </tr>
       </tbody>
     </table>
@@ -389,14 +388,14 @@ function GroupMeansMatrix({
             {row.map((value, j) => (
               <td key={j}>{(value / hospitals.length).toFixed(2)}</td>
             ))}
-            <th>{hospitals[0].outputs[i].name}</th>
+            {/* <th>{hospitals[0].outputs[i].name}</th> */}
           </tr>
         ))}
         <tr>
-          {hospitals[0].inputs.map((input, i) => (
+          {/* {hospitals[0].inputs.map((input, i) => (
             <th key={i}>{input.name}</th>
           ))}
-          <th></th>
+          <th></th> */}
         </tr>
       </tbody>
     </table>
