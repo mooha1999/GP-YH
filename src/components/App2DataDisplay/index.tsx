@@ -160,7 +160,7 @@ export default function App2DataDisplay({
               }
             />
             {/* Averages*/}
-            <h2>Averages</h2>
+            <h2 className="m-4">Averages</h2>
             {evaluationRate !== "BOTH" && (
               <Averages
                 evaluationRate={evaluationRate}
