@@ -83,6 +83,7 @@ export default function InputsOutputsForm({
                   {inputField.name}:
                   <input
                     type="number"
+                    step="any"
                     {...controlHospitalNames.register(
                       `hospitals.${index}.inputs.${inputIndex}.value`,
                       {
@@ -100,6 +101,7 @@ export default function InputsOutputsForm({
                   {outputField.name}:
                   <input
                     type="number"
+                    step="any"
                     {...controlHospitalNames.register(
                       `hospitals.${index}.outputs.${outputIndex}.value`,
                       {

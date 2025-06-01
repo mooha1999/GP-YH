@@ -79,6 +79,7 @@ export default function App3() {
               Mean waiting time (min):
               <input
                 type="number"
+                step="any"
                 value={clinic.meanWaitingTime}
                 onChange={(e) => {
                   const updatedClinics = [...clinicsData];
@@ -94,6 +95,7 @@ export default function App3() {
               Mean service time (min):
               <input
                 type="number"
+                step="any"
                 value={clinic.meanServiceTime}
                 onChange={(e) => {
                   const updatedClinics = [...clinicsData];
@@ -109,6 +111,7 @@ export default function App3() {
               Mean number of patients:
               <input
                 type="number"
+                step="any"
                 value={clinic.meanPatients}
                 onChange={(e) => {
                   const updatedClinics = [...clinicsData];
