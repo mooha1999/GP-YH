@@ -134,7 +134,7 @@ export default function App2DataDisplay({
       {/* I am using tailwindcss for styling */}
       {evaluationRate !== "RATE" && (
         <main className="grid grid-cols-2 gap-4 overflow-auto">
-          <main>
+          <main className="overflow-auto">
             {/* Data Display */}
             <h2>Data Display</h2>
             <DataDisplay
@@ -143,7 +143,7 @@ export default function App2DataDisplay({
               inputsCount={inputsCount}
             />
           </main>
-          <main>
+          <main className="overflow-auto">
             {/* Percentages */}
             <h2>Percentages</h2>
             <Percentages
@@ -177,7 +177,7 @@ export default function App2DataDisplay({
       )}
       {evaluationRate === "RATE" && (
         <>
-          <main className="flex gap-4">
+          <main className="flex gap-4 overflow-auto">
             <Means
               means={means}
               inputsCount={inputsCount}
