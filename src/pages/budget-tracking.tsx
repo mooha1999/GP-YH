@@ -66,7 +66,7 @@ export default function BudgetTracking() {
   };
 
   const onConfidenceLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
+    const value = parseFloat(e.target.value);
     if (value >= 0 && value < 100) {
       setConfidenceLevel(value);
     } else if (value < 0) {
@@ -85,7 +85,7 @@ export default function BudgetTracking() {
           type="number"
           value={devices}
           onChange={(e) => setDevices(parseInt(e.target.value))}
-          />
+        />
       </div>
       <div>
         <label>Enter the confidence level percentage:</label>
@@ -115,10 +115,11 @@ export default function BudgetTracking() {
                 <input
                   key={j}
                   type="number"
+                  step="any"
                   value={price}
                   onChange={(e) => {
                     const newPrices = [...prices];
-                    newPrices[i].values[j] = parseInt(e.target.value);
+                    newPrices[i].values[j] = parseFloat(e.target.value);
                     setPrices(newPrices);
                   }}
                 />
