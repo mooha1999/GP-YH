@@ -83,15 +83,15 @@ export default function BudgetTracking() {
         <label>Enter the number of devices:</label>
         <input
           type="number"
-          step="any"
           value={devices}
           onChange={(e) => setDevices(parseInt(e.target.value))}
-        />
+          />
       </div>
       <div>
         <label>Enter the confidence level percentage:</label>
         <input
           type="number"
+          step="any"
           value={confidenceLevel}
           onChange={onConfidenceLevelChange}
         />
