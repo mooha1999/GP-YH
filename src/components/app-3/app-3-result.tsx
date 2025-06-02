@@ -72,7 +72,7 @@ export default function App3Result({ clinicsData }: App3ResultProps) {
   });
 
   const meanTimeCustomerInSystem = clinicsData.map((_, i) => {
-    return 1 / (meanArrivalRate[i] - meanServiceRate[i]);
+    return 1 / (meanServiceRate[i] - meanArrivalRate[i]);
   });
 
   const probabilityWaitingForService = clinicsData.map((_, i) => {
